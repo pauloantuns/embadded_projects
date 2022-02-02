@@ -5,10 +5,9 @@
 #include <DHT.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP280.h>
-#include <math.h>
 
-const char* ssid = "Fenix";
-const char* pass = "x1e3pjitbav";
+const char* ssid = "";
+const char* pass = "";
 
 const int randomico = random(1000);
 
@@ -21,9 +20,8 @@ DHT dht(sensor, DHTTYPE);
 
 Adafruit_BMP280 bmp280;
 
-//#define CHAT_ID "1677067715"
-//#define CHAT_ID "-1001659044240" //canal
-#define BOTtoken "5092819419:AAFqrgzfx68Po1VfTHTivdW3_9ByEQaH-YU"
+#define CHAT_ID ""
+#define BOTtoken ""
 
 WiFiClientSecure client;
 UniversalTelegramBot bot(BOTtoken, client);
@@ -37,7 +35,7 @@ const float a = 17.62;
 const int maxloop = 72;
 int passo = 0;
 int n = 0;
-const int intervalo = 600000; //10minutos
+const int intervalo = 600000; //10minutes
 int maxinterval = intervalo/2500;
 
 float *leituras(){
@@ -64,13 +62,8 @@ void handleNewMessages(int numNewMessages){
   Serial.println(String(numNewMessages));
 
   for (int i=0; i<numNewMessages; i++) {
-    // Chat id of the requester
     String chat_id = String(bot.messages[i].chat_id);
     Serial.println(chat_id);
-   // if (chat_id != CHAT_ID){
-  //    bot.sendMessage(chat_id, "Usuário não autorizado a utilizar este bot.", "");
-  //    continue;
-   // }
 
   String text = bot.messages[i].text;
   Serial.println(text);
@@ -114,7 +107,7 @@ void handleNewMessages(int numNewMessages){
      bot.sendMessage(chat_id, message, "");
   }
   
-  if(text == "/loop" and chat_id == "1677067715"){
+  if(text == "/loop" and chat_id == "ID"){
     passo = 0;
     while(passo < maxloop){
       
@@ -125,9 +118,8 @@ void handleNewMessages(int numNewMessages){
       message += "Pressão Atmosférica Local: " + String(dados[2]) + "hPa \n";
       message += "Temperatura do Ponto de Orvalho: " + String(dados[4]) + "°C \n";
       
-      bot.sendMessage("-1001659044240", message, "");
+      bot.sendMessage("ID", message, "");
       passo++;
-      //bot.sendMessage("1677067715", message, "");
       while(n < (maxinterval/2)){
         delay(2500);
         n++;
@@ -139,9 +131,9 @@ void handleNewMessages(int numNewMessages){
     }
   }
 
-   if((text == "/parar" or text == "/stop") and chat_id == "1677067715"){
+   if((text == "/parar" or text == "/stop") and chat_id == ""){
     String parar = "Loop interrompido. Aguardando novas instruções. \n";
-    bot.sendMessage("1677067715", parar, "");
+    bot.sendMessage("", parar, "");
     passo = maxloop;
     continue;
    }
@@ -174,7 +166,7 @@ void setup() {
   }
   String online = "Olá, estou online!";
   online += "\n " + String(randomico);
-  bot.sendMessage("1677067715", online, "");
+  bot.sendMessage("", online, "");
 
 }
 
