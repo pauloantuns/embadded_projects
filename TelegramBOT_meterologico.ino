@@ -81,7 +81,7 @@ void handleNewMessages(int numNewMessages){
       ajuda += "/ajuda ... Exibe os comandos disponíveis.\n";
       ajuda += "/agora ... Envia uma única leitura dos dados metereológicos, em tempo real. \n";
       
-  if(chat_id == "1677067715"){
+  if(chat_id == ""){
       ajuda += "/loop ... Bot entra em loop, enviando dados a cada 10 min pelas próximas 12 horas. \n";
       ajuda += "/reboot ... Reinicia o bot. \n";
       ajuda += "/parar ... Interrompe o loop de envio de dados. \n";
@@ -158,7 +158,6 @@ void setup() {
   
   dht.begin();
   client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
-  // Print ESP32 Local IP Address
   Serial.println(WiFi.localIP());
   boolean status = bmp280.begin(0x76);
   if (!status) {
